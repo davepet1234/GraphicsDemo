@@ -1,0 +1,30 @@
+##
+#
+# GraphicsDemo.inf
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010006
+  BASE_NAME                      = GraphicsDemo
+  FILE_GUID                      = da0338fd-e265-47ba-a592-861b759bc9e1
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = ShellCEntryLib
+
+[Sources]
+  GraphicsDemo.c
+  Rand.c
+  Rand.h
+  GraphicsLib/Graphics.c
+  GraphicsLib/Graphics.c
+  GraphicsLib/Font.c
+  GraphicsLib/Font.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+  ShellPkg/ShellPkg.dec
+
+[LibraryClasses]
+  UefiLib
+  ShellCEntryLib
