@@ -87,9 +87,9 @@ ShellAppMain (
     UINT32 DisplayHeight = GetFBVerRes();
 
     // Display current graphics info
-    Print(L"Graphics mode: %d\n", Mode);
-    Print(L"Resolution   : %d x %d\n", DisplayWidth, DisplayHeight);
-    Print(L"\nPress any key to continue\n");
+    GPrint(NULL, L"Graphics mode: %d\n", Mode);
+    GPrint(NULL, L"Resolution   : %d x %d\n", DisplayWidth, DisplayHeight);
+    GPrint(NULL, L"\nPress any key to continue\n");
     WaitKeyPress();
 
     // Draw pixels
@@ -185,7 +185,7 @@ ShellAppMain (
         INT32 r = Rand() % (dist1 > dist2 ? dist2 : dist1);
         DrawFillCircle(x0, y0, r, RAND_COLOUR);
     }
-    GPutString(0, 0, L"CIRCLES", WHITE, BLACK, TRUE, FONT10x20);
+    GPutString(0, 0, L"FILLED CIRCLES", WHITE, BLACK, TRUE, FONT10x20);
     WaitKeyPress();
 
     // Drawing in a clipped region
@@ -232,16 +232,14 @@ ShellAppMain (
     GPutString(0, 0, L"RENDER BUFFER", WHITE, BLACK, TRUE, FONT10x20);
     WaitKeyPress();
 
-    // Display text - display all supported fonts
+    // Display text
     ClearScreen(BLACK);
-    GPutString(0, 0, L"TEXT", WHITE, BLACK, TRUE, FONT10x20);
+    GPrint(NULL, L"TEXT\n\n");
     {
-        INT32 y=50;
-        for (UINTN i=0 ; i<FontListSize; i++) {
-            GPutString(0, y, L" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrsuvwxyz{|}~",
-                        WHITE, BLACK, TRUE, (FONT) FontList[i]);
-            y += GetFontHeight((FONT)FontList[i]) + 5;
-
+        // Print story to text box
+        UINTN i = 0;
+        while (Story[i]) {
+            GPrint(NULL, Story[i++]);
         }
     }
     WaitKeyPress();
@@ -264,6 +262,20 @@ ShellAppMain (
             gBS->Stall(100000);
         }
 
+    }
+    WaitKeyPress();
+
+    // Display all supported fonts
+    ClearScreen(BLACK);
+    GPutString(0, 0, L"FONTS", WHITE, BLACK, TRUE, FONT10x20);
+    {
+        INT32 y=50;
+        for (UINTN i=0 ; i<FontListSize; i++) {
+            GPutString(0, y, L" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrsuvwxyz{|}~",
+                        WHITE, BLACK, TRUE, (FONT) FontList[i]);
+            y += GetFontHeight((FONT)FontList[i]) + 5;
+
+        }
     }
     WaitKeyPress();
 
